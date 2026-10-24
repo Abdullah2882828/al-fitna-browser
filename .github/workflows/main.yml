@@ -1,34 +1,66 @@
-name: Deploy
+name: Build Al-Fitna APK
+
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   workflow_dispatch:
+
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- الخطوة السحرية: تفريغ مساحة السيرفر قبل البناء (لا تمس ملفات مشروعك أبداً) ---
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
         with:
-          node-version: 20
-      - run: npm install
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+          tool-cache: false
+          android: false  # نحافظ على بيئة الأندرويد لأننا نحتاجها لبناء التطبيق
+          dotnet: true    # حذف بيئة دوت نت لتفريغ مساحة ضخمة
+          haskell: true   # حذف بيئة هاسكل لتفريغ مساحة إضافية
+          large-packages: false
+          docker-images: true # حذف صور دوكر المؤقتة الكبيرة
+          swap-storage: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Native Android Folder (Prebuild)
+        run: npx expo prebuild --platform android --clean
+
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Publish latest-debug Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p build-artifacts
+          find android/app/build/outputs/apk/debug -name "*.apk" -exec cp {} build-artifacts/ \;
+          gh release delete latest-debug --repo "$GITHUB_REPOSITORY" --yes || true
+          git push origin :refs/tags/latest-debug || true
+          gh release create latest-debug build-artifacts/*.apk \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Al-Fitna Browser - Latest Build" \
+            --notes "نسخة تجريبية مبنية تلقائياً لمتصفح الفطنة" \
+            --prerelease
