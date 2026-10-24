@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محادثة تجريبية — نموذج ذكاء اصطناعي (DeepSeek / ChatGPT Demo)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f7f7f8;
+      color: #212121;
+      margin: 0;
+      padding: 24px;
+      line-height: 1.6;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .chat-bubble {
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 12px;
+    }
+    .title { font-weight: bold; font-size: 16px; }
+    .badge { background: #2563eb; color: #fff; padding: 2px 8px; border-radius: 6px; font-size: 12px; }
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: ui-monospace, Menlo, Monaco, monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      direction: ltr;
+      text-align: left;
+      margin: 12px 0 20px;
+    }
+    .code-header {
+      background: #2d2d2d;
+      color: #9cdcfe;
+      padding: 6px 14px;
+      border-radius: 8px 8px 0 0;
+      font-size: 12px;
+      font-family: monospace;
+      direction: ltr;
+      display: flex;
+      justify-content: space-between;
+    }
+    .code-container pre {
+      margin-top: 0;
+      border-radius: 0 0 8px 8px;
+    }
+    .tip {
+      background: #eff6ff;
+      border-right: 4px solid #2563eb;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    button.copy-btn {
+      background: #3f3f46;
+      color: #fff;
+      border: none;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-bubble">
+    <div class="header-bar">
+      <div class="title">🤖 مساعد الذكاء الاصطناعي — رد كامل مع كود المشروع</div>
+      <span class="badge">صفحة اختبار الفطنة</span>
+    </div>
+
+    <div class="tip">
+      💡 <strong>جرّب السحّاب هنا:</strong> اضغط على الإشارة المرجعية <code>fitna</code> في متصفحك أثناء فتح هذه الصفحة، أو انسخ كود الـ Bookmarklet وألصقه في وحدة التحكم (Console) لمشاهدة السحّاب وهو يكتشف كتل الكود أدناه ويجهّزها للفطنة!
+    </div>
+
+    <p>أهلاً بك! إليك الهيكل الكامل لمشروع تطبيق قائمة المهام مع شجرة الملفات والأكواد المنظمة:</p>
+
+    <!-- Block 1: Project Tree -->
+    <h3>مخطط هيكل المشروع:</h3>
+    <pre><code class="language-text">my-todo-app/
+├── index.html
+├── package.json
+├── src/
+│   ├── main.js
+│   ├── style.css
+│   └── utils/
+│       └── storage.js
+└── api/
+    └── server.py</code></pre>
+
+    <!-- Block 2: package.json with header bar -->
+    <p>أولاً، ملف الإعدادات <strong>package.json</strong>:</p>
+    <div class="code-container">
+      <div class="code-header">
+        <span>package.json</span>
+        <button class="copy-btn">Copy نسخ</button>
+      </div>
+      <pre><code class="language-json">{
+  "name": "my-todo-app",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite"
+  },
+  "dependencies": {
+    "lucide": "^0.400.0"
+  }
+}</code></pre>
+    </div>
+
+    <!-- Block 3: index.html with comment inside -->
+    <p>ثانياً، صفحة الويب الأساسية:</p>
+    <pre><code class="language-html">&lt;!-- filename: index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ar" dir="rtl"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;تطبيق المهام&lt;/title&gt;
+  &lt;link rel="stylesheet" href="./src/style.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="app"&gt;
+    &lt;h1&gt;قائمة المهام اليومية&lt;/h1&gt;
+    &lt;input id="taskInput" placeholder="أضف مهمة جديدة..." /&gt;
+    &lt;ul id="taskList"&gt;&lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script type="module" src="./src/main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <!-- Block 4: src/style.css with hint pattern -->
+    <h3>📄 `src/style.css`</h3>
+    <p>ملف التنسيقات والأنماط البصرية:</p>
+    <pre><code class="language-css">body {
+  font-family: sans-serif;
+  background: #f0f2f5;
+  margin: 0;
+  padding: 20px;
+}
+#app {
+  max-width: 450px;
+  margin: 40px auto;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+#taskInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+}</code></pre>
+
+    <!-- Block 5: src/main.js with first line comment -->
+    <p>قم بإنشاء ملف <code>src/main.js</code> للتحكم في المهام:</p>
+    <pre><code class="language-javascript">// filename: src/main.js
+import { loadTasks, saveTasks } from './utils/storage.js';
+
+const input = document.getElementById('taskInput');
+const list = document.getElementById('taskList');
+let tasks = loadTasks();
+
+function render() {
+  list.innerHTML = '';
+  tasks.forEach((t, i) => {
+    const li = document.createElement('li');
+    li.textContent = t;
+    list.appendChild(li);
+  });
+}
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && input.value.trim()) {
+    tasks.push(input.value.trim());
+    saveTasks(tasks);
+    input.value = '';
+    render();
+  }
+});
+
+render();</code></pre>
+
+    <!-- Block 6: src/utils/storage.js with hint pattern -->
+    <p><strong>File: src/utils/storage.js</strong></p>
+    <pre><code class="language-javascript">const KEY = 'my_app_tasks';
+
+export function loadTasks() {
+  try {
+    return JSON.parse(localStorage.getItem(KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+export function saveTasks(tasks) {
+  localStorage.setItem(KEY, JSON.stringify(tasks));
+}</code></pre>
+
+    <!-- Block 7: api/server.py with python comment -->
+    <p>وللخادم الخلفي اختياري بلغة بايثون:</p>
+    <div class="code-container">
+      <div class="code-header">api/server.py</div>
+      <pre><code class="language-python"># file: api/server.py
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+class CustomHandler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        super().end_headers()
+
+def run(port=8000):
+    server_address = ('', port)
+    httpd = HTTPServer(server_address, CustomHandler)
+    print(f"Server running on port {port}...")
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+    run()</code></pre>
+    </div>
+
+  </div>
+
+</body>
+</html>
